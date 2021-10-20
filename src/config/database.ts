@@ -1,21 +1,15 @@
 import { Dialect, Sequelize } from 'sequelize'
 
-const dbName = process.env.DB_NAME as string
-const dbUser = process.env.DB_USER as string
-const dbHost = process.env.DB_HOST
-//const dbDriver = process.env.DB_DRIVER as Dialect
-const dbPassword = process.env.DB_PASSWORD
+const DB_NAME = process.env.DB_NAME as string
+const DB_USER = process.env.DB_USER as string
+const DB_HOST = process.env.DB_HOST as string 
+const DB_DRIVER = process.env.DB_DRIVER as Dialect
+const DB_PASSWORD = process.env.DB_PASSWORD 
 
-console.log({
-    dbName,
-    dbUser,
-    dbHost,
-    dbPassword
-})
 
-const sequelizeConnection = new Sequelize('node_db', 'root', '', {
-  host: 'localhost',
-  dialect: 'mysql',
+const sequelizeConnection = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
+  host: DB_HOST,
+  dialect: DB_DRIVER,
 })
 
 export default sequelizeConnection

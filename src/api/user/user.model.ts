@@ -2,7 +2,11 @@ import { DataTypes, Model } from 'sequelize';
 import { IUser } from './user.interface';
 import db from '../../config/database'
 
-export class User extends Model<IUser> {}
+export class User extends Model {
+    static associatiate(models: any) {
+        console.log(models, 'mmmmm')
+    }
+}
 
 User.init(
     {
@@ -30,6 +34,10 @@ User.init(
         active: {
             type: DataTypes.BOOLEAN,
             defaultValue: true
+        },
+        code: {
+            type: DataTypes.STRING,
+             allowNull: true
         }
     },
     {

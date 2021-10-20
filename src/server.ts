@@ -1,35 +1,37 @@
 import "dotenv"
 import express, { Application, Request, Response } from 'express';
+const env = require('dotenv').config()
 import db from './config/database'
 import { User } from './api/user/user.model';
+import userController from "./api/user/user.controller";
 const app: Application = express();
 const port = 9000;
 
 
-db.sync().then(() => {
-    console.log('connection to db')
-})
 // Body parsing Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get('/create', async(req, res) => {
-   try {
-       const user  = await User.create({
-           username:'marko',
-           password:'123'
-       })
+app.get('/', userController.index)
+app.post('/create', userController.create)
 
-       return res.status(200).send(user);
-   } catch (error:any) {
-       console.log(error.message, 'error')
-   }
-})
-app.get('/', async(req:Request, res: Response): Promise<Response> => {
-     return res.status(200).send({message:'hello baje'})
-})
 
 
 app.listen(port, () => {
+    
+// db.sync({ force: true }).then(() => {
+ 
+//     console.log('connection to db')
+// })
+
+db.authenticate().then( async() => {
+    try {
+        console.log('db connection')
+        await db.sync({ force: true });
+    } catch (error:any) {
+        console.log(error.message)
+        
+    }
+}) 
     console.log(`Server is running on port ${port}`)
 })
