@@ -1,10 +1,8 @@
 import { User } from "./user.model";
-import { IUser  } from "./user.interface";
+import { UserAttributes  } from "./user.interface";
 import { CreateUserDto } from './dto/create-user.dto' 
 
-interface Response{
-    name:string;
-}
+
 export class UserService {
     private userRepository;
     constructor(userRepository: typeof User) {
@@ -22,13 +20,16 @@ export class UserService {
     public async create() {
         console.log(' create user controlle')
          
-        return {data:'test from controller'}
        try {
-         const user  = await this.userRepository.create({
-             username:'marko',
-             password:'123'
-         })
-        return user;
+        const newUser = await this.userRepository.create({
+            username: "Johnny",
+            password: "John",
+          });
+          console.log(newUser.id, newUser.name, newUser.preferredName);
+        
+          const foundUser = await this.userRepository.findOne({ where: { username: "Johnny" } });
+          if (foundUser === null) return;
+          console.log(foundUser.name);
      } catch (error:any) {
          console.log(error.message, 'error')
      }

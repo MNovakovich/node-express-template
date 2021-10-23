@@ -1,47 +1,43 @@
-import { DataTypes, Model } from 'sequelize';
-import { IUser } from './user.interface';
-import db from '../../config/database'
+import { Model, DataTypes } from "sequelize";
+import sequelizeConnection from "../../config/database";
 
 export class User extends Model {
-    static associatiate(models: any) {
-        console.log(models, 'mmmmm')
-    }
+  public id!: number; // Note that the `null assertion` `!` is required in strict mode.
+  public name!: string;
+  public preferredName!: string | null; // for nullable fields
 }
 
 User.init(
-    {
-        id: {
-            type: DataTypes.INTEGER,
-            primaryKey: true,
-            allowNull: false,
-            autoIncrement:true
-        },
-        username: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            unique:true
-        },
-        password: {
-            type: DataTypes.STRING,
-            allowNull:false
-        },
-        first_name: {
-            type: DataTypes.STRING,
-        },
-        last_name: {
-            type: DataTypes.STRING,
-        },
-        active: {
-            type: DataTypes.BOOLEAN,
-            defaultValue: true
-        },
-        code: {
-            type: DataTypes.STRING,
-             allowNull: true
-        }
+  {
+    id: {
+      type: DataTypes.INTEGER.UNSIGNED,
+      autoIncrement: true,
+      primaryKey: true,
     },
-    {
-        sequelize:db,
-        tableName:'users'
-    }
-)
+    name: {
+      type: new DataTypes.STRING(128),
+      allowNull: false,
+    },
+    lastname: {
+      type: new DataTypes.STRING(128),
+      allowNull: true,
+    },
+  },
+  {
+    tableName: "users",
+    sequelize:sequelizeConnection, // passing the `sequelize` instance is required
+  }
+);
+
+async function doStuffWithUserModel() {
+  const newUser = await User.create({
+    name: "Johnny",
+    preferredName: "John",
+  });
+  console.log(newUser.id, newUser.name, newUser.preferredName);
+
+  const foundUser = await User.findOne({ where: { name: "Johnny" } });
+  if (foundUser === null) return;
+  console.log(foundUser.name);
+}
+

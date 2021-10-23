@@ -1,4 +1,5 @@
 import "dotenv"
+import "reflect-metadata"
 import express, { Application, Request, Response } from 'express';
 const env = require('dotenv').config()
 import db from './config/database'
@@ -13,7 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.get('/', userController.index)
-app.post('/create', userController.create)
+app.get('/create', userController.create)
 
 
 

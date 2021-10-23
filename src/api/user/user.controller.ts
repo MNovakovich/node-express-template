@@ -1,6 +1,7 @@
 import { Response, Request } from 'express'
 import { userService } from './user.services'
 import { User } from "./user.model";
+import { Module } from '../../core'
 
 class UserController {
     private userRepository: any;
@@ -8,6 +9,7 @@ class UserController {
        this.userRepository =  userRepository;       
     }
     public async index(req:Request, res:Response):Promise<any> {
+        console.log(new Module)
         const data = await userService.getOne();
         return res.status(200).send(data);
     }
