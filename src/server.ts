@@ -16,23 +16,14 @@ app.use(express.urlencoded({ extended: true }));
 app.get('/', userController.index)
 app.get('/create', userController.create)
 
-
-
 app.listen(port, () => {
-    
-// db.sync({ force: true }).then(() => {
- 
-//     console.log('connection to db')
-// })
-
-db.authenticate().then( async() => {
-    try {
-        console.log('db connection')
-        await db.sync({ force: true });
-    } catch (error:any) {
-        console.log(error.message)
-        
-    }
-}) 
+    db.authenticate().then( async() => {
+        try {
+            console.log('db connection')
+            await db.sync({ force: true });
+        } catch (error:any) {
+            console.log(error.message)    
+        }
+    }) 
     console.log(`Server is running on port ${port}`)
 })

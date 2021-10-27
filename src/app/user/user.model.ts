@@ -15,11 +15,11 @@ User.init(
       primaryKey: true,
     },
     name: {
-      type: new DataTypes.STRING(128),
+      type: DataTypes.STRING(128),
       allowNull: false,
     },
     lastname: {
-      type: new DataTypes.STRING(128),
+      type: DataTypes.STRING(128),
       allowNull: true,
     },
   },
