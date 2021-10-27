@@ -1,15 +1,14 @@
 import { Response, Request } from 'express'
 import { userService } from './user.services'
 import { User } from "./user.model";
-import { Module } from '../../core'
 
 class UserController {
-    private userRepository: any;
-    constructor(userRepository:any) {
-       this.userRepository =  userRepository;       
+    private userService: any;
+    constructor(userService: any) {
+       this.userService =  userService;       
     }
     public async index(req:Request, res:Response):Promise<any> {
-        console.log(new Module)
+       
         const data = await userService.getOne();
         return res.status(200).send(data);
     }
@@ -20,4 +19,4 @@ class UserController {
 }
 
 
-export default new UserController(User);
+export default new UserController(userService);

@@ -1,5 +1,5 @@
 import { Model, DataTypes } from "sequelize";
-import sequelizeConnection from "../../config/database";
+const sequelizeConnection = require( "../../config/database");
 
 export class User extends Model {
   public id!: number; // Note that the `null assertion` `!` is required in strict mode.

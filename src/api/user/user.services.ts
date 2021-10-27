@@ -25,7 +25,7 @@ export class UserService {
             username: "Johnny",
             password: "John",
           });
-          console.log(newUser.id, newUser.name, newUser.preferredName);
+         
         
           const foundUser = await this.userRepository.findOne({ where: { username: "Johnny" } });
           if (foundUser === null) return;
