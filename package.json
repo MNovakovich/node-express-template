@@ -7,7 +7,7 @@
     "dev": "ts-node-dev --respawn src/server.ts",
     "build": "tsc",
     "start": "node dist/src/server.js",
-    "seed:create": "npx sequelize-cli seed:generate --seeders-path ./src/database/seeders --name --[args]"
+    "seed": "npx sequelize-cli db:seed:all --seeders-path ./src/database/seeders"
   },
   "keywords": [
     "node",

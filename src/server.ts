@@ -3,8 +3,8 @@ import "reflect-metadata"
 import express, { Application, Request, Response } from 'express';
 const env = require('dotenv').config()
 const db = require( './config/database' );
-import { User } from './api/user/user.model';
-import userController from "./api/user/user.controller";
+import { User } from './app/user/user.model';
+import userController from "./app/user/user.controller";
 const app: Application = express();
 const port = 9000;
 
