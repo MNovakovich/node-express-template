@@ -1,5 +1,5 @@
-import { Model, DataTypes } from "sequelize";
-const sequelizeConnection = require( "../../config/database");
+import { Model, DataTypes } from 'sequelize';
+const sequelizeConnection = require('../../config/database');
 
 export class User extends Model {
   public id!: number; // Note that the `null assertion` `!` is required in strict mode.
@@ -14,30 +14,30 @@ User.init(
       autoIncrement: true,
       primaryKey: true,
     },
-    name: {
+    firstName: {
       type: DataTypes.STRING(128),
       allowNull: false,
+      field: 'first_name',
     },
-    lastname: {
+    lastName: {
       type: DataTypes.STRING(128),
       allowNull: true,
+      field: 'last_name',
     },
   },
   {
-    tableName: "users",
-    sequelize:sequelizeConnection, // passing the `sequelize` instance is required
+    tableName: 'users',
+    sequelize: sequelizeConnection, // passing the `sequelize` instance is required
   }
 );
 
 async function doStuffWithUserModel() {
   const newUser = await User.create({
-    name: "Johnny",
-    preferredName: "John",
+    first_name: 'Johnny',
+    last_name: 'John',
   });
-  console.log(newUser.id, newUser.name, newUser.preferredName);
 
-  const foundUser = await User.findOne({ where: { name: "Johnny" } });
+  const foundUser = await User.findOne({ where: { first_name: 'Johnny' } });
   if (foundUser === null) return;
   console.log(foundUser.name);
 }
-

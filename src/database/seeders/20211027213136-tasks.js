@@ -1,4 +1,5 @@
 'use strict';
+const faker = require('faker');
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
@@ -8,9 +9,15 @@ module.exports = {
 
       Example:
       */
-      return queryInterface.bulkInsert('tasks', [{
-        title: 'John Doe',
-      }], {});
+     const data = []
+     for(let i =0; i < 30; i++){
+       data.push({
+         title:faker.company.companyName(),
+         user_id:faker.random.number({min:1, max:10})
+       })
+     }
+     console.log(data, 'data')
+      return queryInterface.bulkInsert('posts', data, {});
     
   },
 
@@ -22,6 +29,6 @@ module.exports = {
       Example:
       return queryInterface.bulkDelete('People', null, {});
     */
-          return queryInterface.bulkDelete('tasks', null, {});
+          return queryInterface.bulkDelete('posts', null, {});
   }
 };

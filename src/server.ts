@@ -1,29 +1,32 @@
-import "dotenv"
-import "reflect-metadata"
+import 'dotenv';
+import 'reflect-metadata';
 import express, { Application, Request, Response } from 'express';
-const env = require('dotenv').config()
-const db = require( './config/database' );
+const env = require('dotenv').config();
+const db = require('./config/database');
 import { User } from './app/user/user.model';
-import userController from "./app/user/user.controller";
+import userController from './app/user/user.controller';
+import postController from './app/posts/post.controler';
 const app: Application = express();
 const port = 9000;
 
-
 // Body parsing Middleware
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 
-app.get('/', userController.index)
-app.get('/create', userController.create)
+app.get('/', userController.index);
+app.get('/create', userController.create);
+app.get('/posts/create', postController.create);
+app.get('/posts/all', postController.index);
+app.get('/posts/delete', postController.delete);
 
 app.listen(port, () => {
-    db.authenticate().then( async() => {
-        try {
-            console.log('db connection')
-            await db.sync({ force: true });
-        } catch (error:any) {
-            console.log(error.message)    
-        }
-    }) 
-    console.log(`Server is running on port ${port}`)
-})
+  db.authenticate().then(async () => {
+    try {
+      console.log('db connection');
+      await db.sync({ force: false });
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  });
+  console.log(`Server is running on port ${port}`);
+});

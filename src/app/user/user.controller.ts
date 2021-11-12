@@ -1,7 +1,7 @@
-import { Response, Request } from "express";
-import { userService } from "./user.services";
-import { User } from "./user.model";
-import { Todo } from '../todo/todo.model'
+import { Response, Request } from 'express';
+import { userService } from './user.services';
+import { User } from './user.model';
+import { Post } from '../posts/post.model';
 class UserController {
   private userService: any;
   constructor(userService: any) {
@@ -9,7 +9,7 @@ class UserController {
   }
 
   public async index(req: Request, res: Response): Promise<any> {
-    const tasks = Todo.findAll({});
+    const tasks = Post.findAll({});
     console.log(tasks);
     const data = await userService.getOne();
     return res.status(200).send(data);

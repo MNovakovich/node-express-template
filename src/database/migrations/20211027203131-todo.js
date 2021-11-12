@@ -8,7 +8,21 @@ module.exports = {
 
       Example:
       */
-      return queryInterface.createTable('todo', { id: Sequelize.INTEGER });
+      return queryInterface.createTable('todo', { 
+        id: {
+          type: Sequelize.INTEGER.UNSIGNED,
+          autoIncrement: true,
+          primaryKey: true,
+        },
+        title: {
+          type: Sequelize.STRING(128),
+          allowNull: false,
+        },
+        completed: {
+          type:  Sequelize.BOOLEAN,
+          defaultValue:false
+        },
+      });
   
   },
 
