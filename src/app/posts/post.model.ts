@@ -1,6 +1,9 @@
 import { Model, DataTypes, Sequelize } from 'sequelize';
+import { injectable, singleton } from 'tsyringe';
 const sequelizeConnection = require('../../config/database');
 
+@singleton()
+@injectable()
 export class Post extends Model {
   public id!: number; // Note that the `null assertion` `!` is required in strict mode.
   public title!: string;

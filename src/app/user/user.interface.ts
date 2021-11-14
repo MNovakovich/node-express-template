@@ -1,5 +1,5 @@
 export interface UserAttributes {
-    id?:number;
-    username: string;
-    password: string;
+  id?: number;
+  firstName: string;
+  lastName: string;
 }

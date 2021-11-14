@@ -1,24 +1,23 @@
 import { Response, Request } from 'express';
-import { userService } from './user.services';
-import { User } from './user.model';
-import { Post } from '../posts/post.model';
-class UserController {
-  private userService: any;
-  constructor(userService: any) {
+import { autoInjectable } from 'tsyringe';
+import { UserService } from './user.services';
+
+@autoInjectable()
+export class UserController {
+  private userService: UserService;
+  constructor(userService: UserService) {
     this.userService = userService;
+    this.index = this.index.bind(this);
+    this.create = this.create.bind(this);
   }
 
   public async index(req: Request, res: Response): Promise<any> {
-    const tasks = Post.findAll({});
-    console.log(tasks);
-    const data = await userService.getOne();
+    const data = await this.userService.getAll();
     return res.status(200).send(data);
   }
 
   public async create(req: Request, res: Response) {
-    const result = await userService.create();
+    const result = await this.userService.create();
     return res.status(200).send(result);
   }
 }
-
-export default new UserController(userService);

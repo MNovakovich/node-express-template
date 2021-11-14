@@ -1,15 +1,20 @@
+import { injectable, inject } from 'tsyringe';
 import { Post } from './post.model';
+import { User } from '../user/user.model';
 const sequelizeConnection = require('../../config/database');
 const { QueryTypes } = require('sequelize');
 //import { CreatePostDto } from './dto/create-post.dto';
 
+@injectable()
 export class PostService {
-  private postRepository;
-  constructor(postRepository: typeof Post) {
-    this.postRepository = new postRepository();
+  public postRepository: any;
+  public userRepository: any;
+  constructor() {
+    this.postRepository = Post;
+    this.userRepository = User;
   }
 
-  public async getAll() {
+  getAll = async () => {
     try {
       const users = await sequelizeConnection.query(
         'SELECT * FROM `posts` WHERE  deletedAt is NULL',
@@ -17,13 +22,19 @@ export class PostService {
           type: QueryTypes.SELECT,
         }
       );
-      return users;
-    } catch (error) {}
-  }
+      //   console.log(this.userRepository);
 
-  public async getOne(): Promise<any> {
+      console.log(User);
+      const res = await this.postRepository.findAll({});
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  //@ts-ignore
+  public async getOne(): any {
     try {
-      const result = await Post.findAll({});
+      const result = this.userRepository.findAll({});
       return result;
     } catch (error: any) {
       console.log(error.message);
@@ -43,5 +54,3 @@ export class PostService {
     }
   }
 }
-
-export const postService = new PostService(Post);

@@ -1,17 +1,26 @@
 import { Response, Request } from 'express';
-import { postService } from './post.services';
+import { autoInjectable, injectable, inject } from 'tsyringe';
+import { PostService } from './post.services';
 import { Post } from './post.model';
+import { BaseController } from '../../core/base.controller';
+import { UserService } from '../user/user.services';
 
-class PostController {
-  private postService: any;
-  constructor(postServ: any) {
-    console.log(postServ, 'post ssss');
-    this.postService = postServ;
+@autoInjectable()
+export class PostController {
+  postService: PostService | any;
+  userService: UserService | any;
+
+  constructor(postService?: PostService, userService?: UserService) {
+    this.postService = postService;
+    this.userService = userService;
+    this.index = this.index.bind(this);
+    this.create = this.create.bind(this);
+    this.delete = this.delete.bind(this);
   }
 
   public async index(req: Request, res: Response): Promise<any> {
     try {
-      const result = await postService.getOne();
+      const result = await this.postService.getAll();
       return res.status(200).send(result);
     } catch (error) {
       console.log(error);
@@ -20,7 +29,7 @@ class PostController {
 
   public async create(req: Request, res: Response) {
     try {
-      const result = await postService.create();
+      const result = await this.postService.create();
       return res.status(200).send(result);
     } catch (error: any) {
       console.log(error.message);
@@ -36,5 +45,3 @@ class PostController {
     } catch (error) {}
   }
 }
-
-export default new PostController(postService);
