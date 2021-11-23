@@ -1,8 +1,10 @@
 import { Router } from 'express';
 import postRouter from './posts';
+import userRouter from './users';
 
-const postIndexRouter = Router();
+const routes = Router();
 
-postIndexRouter.use('/', postRouter);
+routes.use('/posts', postRouter);
+routes.use('/users', userRouter);
 
-export default postIndexRouter;
+export default routes;

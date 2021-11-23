@@ -20,4 +20,9 @@ export class UserController {
     const result = await this.userService.create();
     return res.status(200).send(result);
   }
+
+  public async delete(req: Request, res: Response) {
+    const result = await this.userService.delete(Number(req.params.id));
+    return res.status(200).send(result);
+  }
 }

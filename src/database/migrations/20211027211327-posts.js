@@ -16,6 +16,16 @@ module.exports = {
         type: Sequelize.BOOLEAN,
         defaultValue: false,
       },
+      userId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        field: 'user_id',
+        // onDelete: 'CASCADE',
+        // references: {
+        //   model: 'User',
+        //   key: 'id'
+        // }
+      },
     });
   },
 

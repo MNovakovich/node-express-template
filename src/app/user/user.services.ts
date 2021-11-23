@@ -1,4 +1,5 @@
 import { User } from './user.model';
+import { Post } from '../posts/post.model';
 import { injectable } from 'tsyringe';
 import { UserAttributes } from './user.interface';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -6,13 +7,20 @@ import { CreateUserDto } from './dto/create-user.dto';
 @injectable()
 export class UserService {
   private userRepository;
+  private postModel;
   constructor() {
     this.userRepository = User;
+    this.postModel = Post;
   }
   public getAll = async () => {
     try {
       const data = { name: 'marko' };
-      return await this.userRepository.findAll({});
+      return await this.userRepository.findAll({
+        attributes: {
+          exclude: ['password', 'updatedAt', 'createdAt', 'deletedAt'],
+        },
+        include: [{ model: this.postModel }],
+      });
     } catch (error: any) {
       console.log(error.message);
     }
@@ -39,6 +47,17 @@ export class UserService {
       console.log(foundUser.name);
     } catch (error: any) {
       console.log(error.message, 'error');
+    }
+  }
+
+  public async delete(id: number): Promise<any> {
+    try {
+      const data = { name: 'marko' };
+      return await this.userRepository.destroy({
+        where: { id },
+      });
+    } catch (error: any) {
+      console.log(error.message);
     }
   }
 }

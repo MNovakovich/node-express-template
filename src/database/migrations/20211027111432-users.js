@@ -8,23 +8,37 @@ module.exports = {
       Example:
       return queryInterface.createTable('users', { id: Sequelize.INTEGER });
     */
-    return queryInterface.createTable('users', { 
-      id:{
+    return queryInterface.createTable('users', {
+      id: {
         type: Sequelize.INTEGER.UNSIGNED,
         autoIncrement: true,
         primaryKey: true,
       },
-      firstName: {
-        type: Sequelize.STRING(128),
+      email: {
+        type: Sequelize.STRING(258),
+        unique: true,
         allowNull: false,
-        field: 'first_name',
       },
-      lastName: {
+      password: {
         type: Sequelize.STRING(128),
         allowNull: true,
-        field: 'last_name',
       },
-    
+      createdAt: {
+        type: Sequelize.DATE,
+        field: 'created_at',
+        // allowNull: false,
+        defaultValue: Sequelize.NOW,
+      },
+      updatedAt: {
+        type: Sequelize.DATE,
+        field: 'updated_at',
+      },
+      deletedAt: {
+        type: Sequelize.DATE,
+        field: 'deleted_at',
+        allowNull: true,
+      },
+
     });
   },
 

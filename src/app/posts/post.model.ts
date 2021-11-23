@@ -1,7 +1,7 @@
 import { Model, DataTypes, Sequelize } from 'sequelize';
 import { injectable, singleton } from 'tsyringe';
 const sequelizeConnection = require('../../config/database');
-
+import { User } from '../user/user.model';
 @singleton()
 @injectable()
 export class Post extends Model {
@@ -10,6 +10,11 @@ export class Post extends Model {
   public content?: boolean | null; // for nullable fields
   public userId!: string;
   public create: any;
+
+  // static associate(models: any) {
+  //   console.log(models);
+  //   Post.belongsTo(models.User, { foreignKey: 'user_id' });
+  // }
 }
 
 Post.init(
@@ -30,6 +35,10 @@ Post.init(
     userId: {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
+      // references: {
+      //   model: 'user',
+      //   key: 'id',
+      // },
       field: 'user_id',
     },
     createdAt: {
@@ -42,8 +51,11 @@ Post.init(
     },
   },
   {
+    modelName: 'post',
     tableName: 'posts',
     sequelize: sequelizeConnection,
     paranoid: true,
   }
 );
+
+//Post.belongsTo(User, { foreignKey: 'user_id' });
