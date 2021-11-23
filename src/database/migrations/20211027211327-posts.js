@@ -2,7 +2,6 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-
     return queryInterface.createTable('posts', {
       id: {
         type: Sequelize.INTEGER.UNSIGNED,
@@ -14,8 +13,8 @@ module.exports = {
         allowNull: false,
       },
       completed: {
-        type:  Sequelize.BOOLEAN,
-        defaultValue:false
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
       },
     });
   },
@@ -28,6 +27,6 @@ module.exports = {
       Example:
       return queryInterface.dropTable('users');
     */
-      return queryInterface.dropTable('posts');
-  }
+    return queryInterface.dropTable('posts');
+  },
 };

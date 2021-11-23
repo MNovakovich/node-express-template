@@ -8,22 +8,21 @@ module.exports = {
 
       Example:
       */
-      return queryInterface.createTable('todo', { 
-        id: {
-          type: Sequelize.INTEGER.UNSIGNED,
-          autoIncrement: true,
-          primaryKey: true,
-        },
-        title: {
-          type: Sequelize.STRING(128),
-          allowNull: false,
-        },
-        completed: {
-          type:  Sequelize.BOOLEAN,
-          defaultValue:false
-        },
-      });
-  
+    return queryInterface.createTable('todo', {
+      id: {
+        type: Sequelize.INTEGER.UNSIGNED,
+        autoIncrement: true,
+        primaryKey: true,
+      },
+      title: {
+        type: Sequelize.STRING(128),
+        allowNull: false,
+      },
+      completed: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+      },
+    });
   },
 
   down: (queryInterface, Sequelize) => {
@@ -34,6 +33,6 @@ module.exports = {
       Example:
       return queryInterface.dropTable('users');
     */
-      return queryInterface.dropTable('todo');
-  }
+    return queryInterface.dropTable('todo');
+  },
 };
