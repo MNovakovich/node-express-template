@@ -9,6 +9,7 @@ export class UserController {
     this.userService = userService;
     this.index = this.index.bind(this);
     this.create = this.create.bind(this);
+    this.delete = this.delete.bind(this);
   }
 
   public async index(req: Request, res: Response): Promise<any> {
@@ -22,7 +23,14 @@ export class UserController {
   }
 
   public async delete(req: Request, res: Response) {
-    const result = await this.userService.delete(Number(req.params.id));
-    return res.status(200).send(result);
+    // console.log(req.params);
+
+    try {
+      const data = await this.userService.deleteOne(Number(req.params.id));
+      console.log('data', data);
+      return res.status(200).send({ message: 'sucess' });
+    } catch (error: any) {
+      console.log(error.message);
+    }
   }
 }

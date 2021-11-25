@@ -1,18 +1,17 @@
-import { Model, DataTypes, Sequelize } from 'sequelize';
+import { Model, DataTypes, Sequelize, Association } from 'sequelize';
 import { injectable, singleton } from 'tsyringe';
 import { Post } from '../posts/post.model';
 const sequelizeConnection = require('../../config/database');
 
-@singleton()
-@injectable()
 export class User extends Model {
   public id!: number; // Note that the `null assertion` `!` is required in strict mode.
   public email?: string;
   public password?: string;
   public preferredName!: string | null; // for nullable field
-  // static associate(models: any) {
-  //   console.log(models);
-  //   User.hasMany(models.Task, { foreignKey: 'id' });
+
+  // associate(models: any) {
+  //   console.log(models, 'models');
+  //   User.hasMany(models.task, { foreignKey: 'userId' });
   // }
 }
 
@@ -52,7 +51,6 @@ User.init(
   }
 );
 
-User.hasMany(Post, { foreignKey: 'userId' });
 // User.scope('withPassword').findAll();
 async function doStuffWithUserModel() {
   const newUser = await User.create({

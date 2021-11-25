@@ -7,6 +7,6 @@ const userController = container.resolve(UserController);
 
 route.get('/create', userController.create);
 route.get('/', userController.index);
-route.get('/:id/delete', userController.delete);
+route.delete('/:id', userController.delete);
 
 export default route;

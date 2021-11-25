@@ -12,21 +12,39 @@ module.exports = {
         type: Sequelize.STRING(128),
         allowNull: false,
       },
-      completed: {
-        type: Sequelize.BOOLEAN,
+      content: {
+        type: Sequelize.STRING,
+        allowNull: true,
         defaultValue: false,
       },
       userId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
+        type: Sequelize.INTEGER(10),
         field: 'user_id',
-        // onDelete: 'CASCADE',
-        // references: {
-        //   model: 'User',
-        //   key: 'id'
-        // }
+        onDelete: 'CASCADE',
+        allowNull: false,
+        references: {
+          model: 'users',
+          key: 'id'
+        }
       },
-    });
+      createdAt: {
+        type: Sequelize.DATE,
+        field: 'created_at',
+        // allowNull: false,
+        defaultValue: Sequelize.NOW,
+      },
+      updatedAt: {
+        type: Sequelize.DATE,
+        field: 'updated_at',
+      },
+      deletedAt: {
+        type: Sequelize.DATE,
+        field: 'deleted_at',
+        allowNull: true,
+      },
+    }).then(() => {
+
+    })
   },
 
   down: (queryInterface, Sequelize) => {

@@ -3,6 +3,7 @@ import 'reflect-metadata';
 import express, { Application, Request, Response } from 'express';
 const env = require('dotenv').config();
 const db = require('./config/database');
+import { DbRelations } from './config/relations';
 
 import routes from './routes';
 import bootstrap from './bootstrap';
@@ -22,6 +23,7 @@ app.listen(port, () => {
     try {
       console.log('db connection');
       await db.sync({ force: false });
+      DbRelations(db.models);
     } catch (error: any) {
       console.log(error.message, '-error server.ts');
     }

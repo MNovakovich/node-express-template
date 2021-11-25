@@ -17,7 +17,7 @@ export class UserService {
       const data = { name: 'marko' };
       return await this.userRepository.findAll({
         attributes: {
-          exclude: ['password', 'updatedAt', 'createdAt', 'deletedAt'],
+          exclude: ['password', 'updatedAt', 'createdAt'],
         },
         include: [{ model: this.postModel }],
       });
@@ -44,20 +44,22 @@ export class UserService {
         where: { username: 'Johnny' },
       });
       if (foundUser === null) return;
-      console.log(foundUser.name);
     } catch (error: any) {
       console.log(error.message, 'error');
     }
   }
 
-  public async delete(id: number): Promise<any> {
+  public async deleteOne(id: any): Promise<any> {
+    console.log(id, ' id');
     try {
       const data = { name: 'marko' };
-      return await this.userRepository.destroy({
+      const res = await this.userRepository.destroy({
         where: { id },
       });
+
+      return res;
     } catch (error: any) {
-      console.log(error.message);
+      console.log(error.message, 'greska');
     }
   }
 }

@@ -20,7 +20,7 @@ export class PostController {
 
   public async index(req: Request, res: Response): Promise<any> {
     try {
-      const result = await this.postService.getAll();
+      const result = await this.postService.getOne();
       return res.status(200).send(result);
     } catch (error) {
       console.log(error);

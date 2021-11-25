@@ -17,14 +17,13 @@ export class PostService {
   getAll = async () => {
     try {
       const users = await sequelizeConnection.query(
-        'SELECT * FROM `posts` WHERE  deletedAt is NULL',
+        'SELECT * FROM `posts` WHERE  deleted_at is NULL',
         {
           type: QueryTypes.SELECT,
         }
       );
       //   console.log(this.userRepository);
 
-      console.log(User);
       const res = await this.postRepository.findAll({});
       return res;
     } catch (error) {
@@ -34,7 +33,9 @@ export class PostService {
   //@ts-ignore
   public async getOne(): any {
     try {
-      const result = this.userRepository.findAll({});
+      const result = this.postRepository.findAll({
+        include: [{ model: this.userRepository }],
+      });
       return result;
     } catch (error: any) {
       console.log(error.message);
