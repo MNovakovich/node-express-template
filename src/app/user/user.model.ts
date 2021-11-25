@@ -1,18 +1,20 @@
 import { Model, DataTypes, Sequelize, Association } from 'sequelize';
 import { injectable, singleton } from 'tsyringe';
 import { Post } from '../posts/post.model';
-const sequelizeConnection = require('../../config/database');
+import { UserAttributes } from './user.interface';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
+const db = require('../../config/database');
 
-export class User extends Model {
-  public id!: number; // Note that the `null assertion` `!` is required in strict mode.
-  public email?: string;
-  public password?: string;
-  public preferredName!: string | null; // for nullable field
-
-  // associate(models: any) {
-  //   console.log(models, 'models');
-  //   User.hasMany(models.task, { foreignKey: 'userId' });
-  // }
+export class User extends Model<
+  UserAttributes | CreateUserDto | UpdateUserDto
+> {
+  id!: number;
+  email!: string;
+  password!: string;
+  createdAt!: string;
+  updatedAt?: string | null;
+  deletedAt?: string | null;
 }
 
 User.init(
@@ -43,7 +45,7 @@ User.init(
   {
     modelName: 'user',
     tableName: 'users',
-    sequelize: sequelizeConnection, // passing the `sequelize` instance is required
+    sequelize: db,
     timestamps: true,
     paranoid: true,
     deletedAt: 'deletedAt',
@@ -52,13 +54,25 @@ User.init(
 );
 
 // User.scope('withPassword').findAll();
+/*
+  Testing typescript interfaces
+*/
 async function doStuffWithUserModel() {
   const newUser = await User.create({
-    first_name: 'Johnny',
-    last_name: 'John',
+    email: 'Johnny@mail.ru',
+    password: 'John',
   });
 
-  const foundUser = await User.findOne({ where: { first_name: 'Johnny' } });
+  const updated = await User.update(
+    {
+      email: 'Johnny@mail.ru',
+      password: 'John',
+      updatedAt: null,
+    },
+    { where: { id: 1 } }
+  );
+
+  const foundUser = await User.findOne({ where: { email: 'Johnny@mail.ru' } });
   if (foundUser === null) return;
   console.log(foundUser.email);
 }

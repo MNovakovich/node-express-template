@@ -1,5 +1,6 @@
 import { Response, Request } from 'express';
 import { autoInjectable } from 'tsyringe';
+import { CreateUserDto } from './dto/create-user.dto';
 import { UserService } from './user.services';
 
 @autoInjectable()
@@ -18,16 +19,17 @@ export class UserController {
   }
 
   public async create(req: Request, res: Response) {
-    const result = await this.userService.create();
+    const data: CreateUserDto = {
+      email: 'marko',
+      password: 'novakovic',
+    };
+    const result = await this.userService.create(data);
     return res.status(200).send(result);
   }
 
   public async delete(req: Request, res: Response) {
-    // console.log(req.params);
-
     try {
       const data = await this.userService.deleteOne(Number(req.params.id));
-      console.log('data', data);
       return res.status(200).send({ message: 'sucess' });
     } catch (error: any) {
       console.log(error.message);

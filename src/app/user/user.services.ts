@@ -33,13 +33,10 @@ export class UserService {
       console.log(error.message);
     }
   }
-  public async create() {
+  public async create(data: CreateUserDto) {
     console.log(' create user controlle');
     try {
-      const newUser = await this.userRepository.create({
-        username: 'Johnny',
-        password: 'John',
-      });
+      const newUser = await this.userRepository.create(data);
       const foundUser = await this.userRepository.findOne({
         where: { username: 'Johnny' },
       });
