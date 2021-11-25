@@ -1,7 +1,8 @@
 import { injectable, inject } from 'tsyringe';
 import { Post } from './post.model';
 import { User } from '../user/user.model';
-const sequelizeConnection = require('../../config/database');
+import { Tag } from '../tag/tag.model';
+const db = require('../../config/database');
 const { QueryTypes } = require('sequelize');
 //import { CreatePostDto } from './dto/create-post.dto';
 
@@ -9,14 +10,16 @@ const { QueryTypes } = require('sequelize');
 export class PostService {
   public postRepository: any;
   public userRepository: any;
+  public tagModel: any;
   constructor() {
     this.postRepository = Post;
     this.userRepository = User;
+    this.tagModel = Tag;
   }
 
   getAll = async () => {
     try {
-      const users = await sequelizeConnection.query(
+      const users = await db.query(
         'SELECT * FROM `posts` WHERE  deleted_at is NULL',
         {
           type: QueryTypes.SELECT,
@@ -34,7 +37,7 @@ export class PostService {
   public async getOne(): any {
     try {
       const result = this.postRepository.findAll({
-        include: [{ model: this.userRepository }],
+        include: [{ model: this.userRepository }, { model: this.tagModel }],
       });
       return result;
     } catch (error: any) {
