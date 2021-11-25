@@ -66,21 +66,22 @@ export class TagService {
     try {
       const users = await db.query(
         `
-        select *, p.title as post_title FROM posts_tags
+        SELECT *, p.title as post_title 
+        FROM posts_tags
         INNER JOIN posts p
-        on posts_tags.post_id = p.id
-      
-      
-      
-      `,
+        ON posts_tags.post_id = p.id  
+        `,
         {
           type: QueryTypes.SELECT,
         }
       );
-      //   const data = await this.postTagModel.findAll({
-      //     include: [{ model: Post }],
-      //   });
-      return users;
+      const data = await PostTag.findAll({
+        include: [
+          { model: Post, attributes: ['id', 'title'] },
+          { model: Tag, attributes: ['id', 'title'] },
+        ],
+      });
+      return data;
     } catch (error: any) {
       console.log(error.message);
     }
