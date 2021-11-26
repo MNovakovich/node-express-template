@@ -1,18 +1,19 @@
 import 'dotenv';
 import 'reflect-metadata';
 import express, { Application } from 'express';
-const env = require('dotenv').config();
-const db = require('./config/database');
 import { DbRelations } from './config/relations';
 import routes from './routes';
 import notFoundMiddleware from './middleware/not-found';
+const env = require('dotenv').config();
+const db = require('./config/database');
+
 const app: Application = express();
 const port = 9900;
 
 // Body parsing Middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use('/', routes);
+app.use('/api/v1', routes);
 app.use(notFoundMiddleware);
 
 app.listen(port, () => {

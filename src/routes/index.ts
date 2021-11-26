@@ -1,11 +1,12 @@
 import { Router } from 'express';
-const postRouter = require('./posts');
-const userRouter = require('./users');
-const tagRoute = require('./tags');
+import postRouter from './posts';
+import userRouter from './users';
+import tagRouter from './tags';
+
 const routes = Router();
 
 routes.use('/posts', postRouter);
 routes.use('/users', userRouter);
-routes.use('/tags', tagRoute);
+routes.use('/tags', tagRouter);
 
 export default routes;

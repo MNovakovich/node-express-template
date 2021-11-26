@@ -33,12 +33,11 @@ export class UserService {
     }
   }
   public async create(data: CreateUserDto) {
+    console.log(data, 'data');
     try {
       const newUser = await this.userRepository.create(data);
-      const foundUser = await this.userRepository.findOne({
-        where: { username: 'Johnny' },
-      });
-      if (foundUser === null) return;
+      return newUser;
+      // if (foundUser === null) return;
     } catch (error: any) {
       console.log(error.message, '-error');
     }

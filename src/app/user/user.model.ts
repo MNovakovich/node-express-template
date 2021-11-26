@@ -36,7 +36,7 @@ User.init(
       type: DataTypes.STRING(258),
       allowNull: false,
       validate: {
-        len: [3, 256],
+        len: [5, 256],
       },
     },
     createdAt: {
