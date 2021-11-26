@@ -3,7 +3,6 @@ import { Post } from '../posts/post.model';
 import { injectable } from 'tsyringe';
 import { UserAttributes } from './user.interface';
 import { CreateUserDto } from './dto/create-user.dto';
-
 @injectable()
 export class UserService {
   private userRepository;
@@ -34,7 +33,6 @@ export class UserService {
     }
   }
   public async create(data: CreateUserDto) {
-    console.log(' create user controlle');
     try {
       const newUser = await this.userRepository.create(data);
       const foundUser = await this.userRepository.findOne({
@@ -42,7 +40,7 @@ export class UserService {
       });
       if (foundUser === null) return;
     } catch (error: any) {
-      console.log(error.message, 'error');
+      console.log(error.message, '-error');
     }
   }
 

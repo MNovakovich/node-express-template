@@ -6,9 +6,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 const db = require('../../config/database');
 
-export class User extends Model<
-  UserAttributes | CreateUserDto | UpdateUserDto
-> {
+export class User extends Model<UserAttributes | CreateUserDto> {
   id!: number;
   email!: string;
   password!: string;
@@ -28,10 +26,18 @@ User.init(
       type: DataTypes.STRING(258),
       allowNull: false,
       unique: true,
+      validate: {
+        isEmail: {
+          msg: 'Must be a valid email address',
+        },
+      },
     },
     password: {
       type: DataTypes.STRING(258),
-      allowNull: true,
+      allowNull: false,
+      validate: {
+        len: [3, 256],
+      },
     },
     createdAt: {
       type: DataTypes.DATE,

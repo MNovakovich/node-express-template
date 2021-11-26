@@ -19,10 +19,9 @@ export class UserController {
   }
 
   public async create(req: Request, res: Response) {
-    const data: CreateUserDto = {
-      email: 'marko',
-      password: 'novakovic',
-    };
+    console.log(req.params);
+    const data: any = { email: 'marko@mail.ru', password: '1' };
+    console.log(req.body);
     const result = await this.userService.create(data);
     return res.status(200).send(result);
   }
