@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { UserController } from '../app/user/user.controller';
+import { UserController } from '../domains/user/user.controller';
 import { container } from 'tsyringe';
 const router = Router();
 

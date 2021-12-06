@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { TagController } from '../app/tag/tag.controller';
+import { TagController } from '../domains/tag/tag.controller';
 import { container } from 'tsyringe';
 const router = Router();
 const tagController = container.resolve(TagController);

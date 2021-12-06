@@ -58,3 +58,4 @@ export class PostService {
     }
   }
 }
+// npx sequelize-auto -h localhost -d timetracking_app -u root -x root -p 3306  --dialect mysql -c ./src/config/db.ts -o ./models -l ts --useDefine ts  --singularize, --sg
