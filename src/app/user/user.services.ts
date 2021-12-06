@@ -33,15 +33,21 @@ export class UserService {
     }
   }
   public async create(data: CreateUserDto) {
-    try {
-      const newUser = await this.userRepository.create(data);
-      const foundUser = await this.userRepository.findOne({
-        where: { username: 'Johnny' },
-      });
-      if (foundUser === null) return;
-    } catch (error: any) {
-      console.log(error.message, '-error');
+    console.log(data, 'datqaaa');
+    // try {
+    const user = await this.userRepository.findOne({
+      where: { email: data.email },
+    });
+    if (user) {
+      return new Error(' greska je');
     }
+
+    const newUser = await this.userRepository.create(data);
+
+    //  if (foundUser === null) return;
+    // } catch (error: any) {
+    //   new Error('error');
+    // }
   }
 
   public async deleteOne(id: any): Promise<any> {

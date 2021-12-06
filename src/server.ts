@@ -5,7 +5,8 @@ const env = require('dotenv').config();
 const db = require('./config/database');
 import { DbRelations } from './config/relations';
 import routes from './routes';
-import notFoundMiddleware from './middleware/not-found';
+import { notFoundMiddleware } from './middleware/not-found';
+import { errorHandlerMiddleware } from './middleware/errror-handler';
 const app: Application = express();
 const port = 9900;
 
@@ -14,6 +15,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use('/', routes);
 app.use(notFoundMiddleware);
+app.use(errorHandlerMiddleware);
 
 app.listen(port, () => {
   db.authenticate().then(async () => {

@@ -1,4 +1,4 @@
-import { Response, Request } from 'express';
+import { Response, Request, NextFunction } from 'express';
 import { autoInjectable } from 'tsyringe';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserService } from './user.services';
@@ -18,12 +18,15 @@ export class UserController {
     return res.status(200).send(data);
   }
 
-  public async create(req: Request, res: Response) {
-    console.log(req.params);
-    const data: any = { email: 'marko@mail.ru', password: '1' };
-    console.log(req.body);
-    const result = await this.userService.create(data);
-    return res.status(200).send(result);
+  public async create(req: Request, res: Response, next: NextFunction) {
+    try {
+      const data: any = { email: 'njihasssd@mail.ru', password: '11111' };
+      const result = await this.userService.create(data);
+      return res.status(200).send(result);
+    } catch (error: any) {
+      console.log(error.message, 'greska ');
+      next(error);
+    }
   }
 
   public async delete(req: Request, res: Response) {
