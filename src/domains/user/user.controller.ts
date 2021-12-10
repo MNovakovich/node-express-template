@@ -1,11 +1,13 @@
 import { Response, Request, NextFunction } from 'express';
 import { autoInjectable } from 'tsyringe';
-import { CreateUserDto } from './dto/create-user.dto';
+import { HttpException } from '../../common/excerptions/HttpExerption';
 import { UserService } from './user.services';
-import { validate } from 'class-validator';
+import { StatusCodes } from 'http-status-codes';
+import { User } from './user.model';
 @autoInjectable()
 export class UserController {
   private userService: UserService;
+
   constructor(userService: UserService) {
     this.userService = userService;
     this.index = this.index.bind(this);
@@ -14,8 +16,7 @@ export class UserController {
     this.delete = this.delete.bind(this);
   }
 
-  public async index(req: Request | any, res: Response): Promise<any> {
-    console.log(req.prdez);
+  public async index(req: Request | any, res: Response, next: NextFunction) {
     try {
       const data = await this.userService.getAll();
       return res.status(200).send(data);
@@ -24,9 +25,16 @@ export class UserController {
     }
   }
 
-  public async show(req: Request, res: Response): Promise<any> {
+  public async show(req: Request, res: Response, next: NextFunction) {
     try {
       const data = await this.userService.getById(Number(req.params.id));
+
+      if (!data) {
+        throw new HttpException(
+          StatusCodes.NOT_FOUND,
+          'The user is not found!'
+        );
+      }
       return res.status(200).send(data);
     } catch (error) {
       next(error);
@@ -35,21 +43,9 @@ export class UserController {
 
   public async create(req: Request, res: Response, next: NextFunction) {
     try {
-      const userDto: CreateUserDto = req.body;
-
-      const data = await this.userService.create(userDto);
-      validate(data).then((errors) => {
-        // errors is an array of validation errors
-        if (errors.length > 0) {
-          console.log('validation failed. errors: ', errors);
-        } else {
-          console.log('validation succeed');
-        }
-      });
-      // if (error) throw new Error(error);
+      const data = await this.userService.create(req.body);
       return res.status(201).send(data);
     } catch (error: any) {
-      console.log(error.name, 'greska ss');
       next(error);
     }
   }
@@ -59,11 +55,7 @@ export class UserController {
       const data = await this.userService.deleteOne(Number(req.params.id));
       return res.status(200).send({ message: 'sucess' });
     } catch (error: any) {
-      console.log(error.message);
       next(error);
     }
   }
-}
-function next(error: unknown) {
-  throw new Error('Function not implemented.');
 }

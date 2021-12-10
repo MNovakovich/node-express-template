@@ -10,6 +10,7 @@ const userController = container.resolve(UserController);
 
 router.post('/', validationMiddleware(CreateUserDto), userController.create);
 router.get('/', userController.index);
+router.get('/:id', userController.show);
 router.delete('/:id', userController.delete);
 
 module.exports = router;

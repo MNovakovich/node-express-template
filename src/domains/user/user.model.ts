@@ -39,14 +39,6 @@ User.init(
         notEmpty: {
           msg: 'Field is requred!',
         },
-        // max: {
-        //   args: [32],
-        //   msg: 'Maximum 32 characters allowed in password',
-        // },
-        // min: {
-        //   args: [4],
-        //   msg: 'Minimum 4 characters required in password',
-        // },
         len: {
           args: [4, 32],
           msg: 'String length is not in this range',

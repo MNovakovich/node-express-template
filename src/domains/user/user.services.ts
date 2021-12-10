@@ -12,34 +12,28 @@ import { UpdateUserDto } from './dto/update-user.dto';
 export class UserService {
   private userRepository;
   private postModel;
+
   constructor() {
     this.userRepository = User;
     this.postModel = Post;
   }
-  public getAll = async () => {
-    try {
-      const data = { name: 'marko' };
-      return await this.userRepository.findAll({
-        attributes: {
-          exclude: ['password', 'updatedAt', 'createdAt'],
-        },
-        include: [{ model: this.postModel }],
-      });
-    } catch (error: any) {
-      console.log(error.message);
-    }
-  };
-  public async getOne(): Promise<any> {
-    try {
-      const data = { name: 'marko' };
-      return await this.userRepository.findAll({});
-    } catch (error: any) {
-      console.log(error.message);
-    }
-  }
-  public async create(data: CreateUserDto) {
-    console.log(data, 'datqaaa');
 
+  public getAll = async () => {
+    const data = await this.userRepository.findAll({
+      attributes: {
+        exclude: ['password', 'updatedAt', 'createdAt'],
+      },
+      include: [{ model: this.postModel }],
+    });
+    return data;
+  };
+
+  public async getOne(id: number): Promise<any> {
+    const data = await this.userRepository.findAll({});
+    return data;
+  }
+
+  public async create(data: CreateUserDto) {
     const user = await this.userRepository.findOne({
       where: { email: data.email },
     });
@@ -49,37 +43,23 @@ export class UserService {
         `You're email ${user.email} already exists ${StatusCodes.CONFLICT} `
       );
     }
-
     const newUser = await this.userRepository.create(data);
     return newUser;
   }
 
   public async update(id, data: UpdateUserDto) {
-    const updated = await User.update(
-      {
-        email: 'Johnny@mail.ru',
-        password: 'John',
-        deletedAt: null,
-      },
-      { where: { id: 1 } }
-    );
+    const user = await User.update(data, { where: { id } });
+    return user;
   }
 
   public async deleteOne(id: any): Promise<any> {
-    console.log(id, ' id');
-    try {
-      const data = { name: 'marko' };
-      const res = await this.userRepository.destroy({
-        where: { id },
-      });
-
-      return res;
-    } catch (error: any) {
-      console.log(error.message, 'greska');
-    }
+    const res = await this.userRepository.destroy({
+      where: { id },
+    });
+    return res;
   }
-  public async getById(id): Promise<any> {
-    const data = await this.userRepository.getOne(id);
+  public async getById(id: number): Promise<any> {
+    const data = await this.userRepository.findOne({ where: { id } });
     return data;
   }
 }
