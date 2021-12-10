@@ -6,6 +6,7 @@ import { serviceResponse } from '../../core/api-response';
 import { CreateUserDto } from './dto/create-user.dto';
 import { HttpException } from '../../common/excerptions/HttpExerption';
 import { StatusCodes } from 'http-status-codes';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @injectable()
 export class UserService {
@@ -51,6 +52,17 @@ export class UserService {
 
     const newUser = await this.userRepository.create(data);
     return newUser;
+  }
+
+  public async update(id, data: UpdateUserDto) {
+    const updated = await User.update(
+      {
+        email: 'Johnny@mail.ru',
+        password: 'John',
+        deletedAt: null,
+      },
+      { where: { id: 1 } }
+    );
   }
 
   public async deleteOne(id: any): Promise<any> {

@@ -5,10 +5,10 @@ const env = require('dotenv').config();
 const db = require('./config/database');
 import { DbRelations } from './config/relations';
 import routes from './routes';
-import { notFoundMiddleware } from './middleware/not-found';
-import { errorHandlerMiddleware } from './middleware/errror-handler';
+import { notFoundMiddleware } from './middleware/not-found.middleware';
+import { errorHandlerMiddleware } from './middleware/errror.middleware';
 import autoRun from './sequelize-auto';
-
+//autoRun();
 export class App {
   public port: string | number;
   public env: string;

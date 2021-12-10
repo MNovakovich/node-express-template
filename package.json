@@ -27,6 +27,8 @@
     "@nestjsx/crud-typeorm": "^5.0.0-alpha.3",
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.13.2",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",

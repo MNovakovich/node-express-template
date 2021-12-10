@@ -2,7 +2,7 @@ import { Response, Request, NextFunction } from 'express';
 import { autoInjectable } from 'tsyringe';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserService } from './user.services';
-
+import { validate } from 'class-validator';
 @autoInjectable()
 export class UserController {
   private userService: UserService;
@@ -14,7 +14,8 @@ export class UserController {
     this.delete = this.delete.bind(this);
   }
 
-  public async index(req: Request, res: Response): Promise<any> {
+  public async index(req: Request | any, res: Response): Promise<any> {
+    console.log(req.prdez);
     try {
       const data = await this.userService.getAll();
       return res.status(200).send(data);
@@ -34,7 +35,17 @@ export class UserController {
 
   public async create(req: Request, res: Response, next: NextFunction) {
     try {
-      const data = await this.userService.create(req.body);
+      const userDto: CreateUserDto = req.body;
+
+      const data = await this.userService.create(userDto);
+      validate(data).then((errors) => {
+        // errors is an array of validation errors
+        if (errors.length > 0) {
+          console.log('validation failed. errors: ', errors);
+        } else {
+          console.log('validation succeed');
+        }
+      });
       // if (error) throw new Error(error);
       return res.status(201).send(data);
     } catch (error: any) {
