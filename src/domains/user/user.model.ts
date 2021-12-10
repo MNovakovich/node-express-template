@@ -6,13 +6,13 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 const db = require('../../config/database');
 
-export class User extends Model<UserAttributes | CreateUserDto> {
+export class User extends Model<UserAttributes, CreateUserDto> {
   id!: number;
   email!: string;
-  password!: string;
-  createdAt!: string;
-  updatedAt?: string | null;
-  deletedAt?: string | null;
+
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
+  deletedAt?: Date | null;
 }
 
 User.init(
@@ -36,7 +36,13 @@ User.init(
       type: DataTypes.STRING(258),
       allowNull: false,
       validate: {
-        len: [5, 256],
+        notEmpty: {
+          msg: 'Field is requred!',
+        },
+        len: {
+          args: [4, 32],
+          msg: 'String length is not in this range',
+        },
       },
     },
     createdAt: {

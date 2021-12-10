@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { PostController } from '../app/posts/post.controler';
+import { PostController } from '../domains/posts/post.controler';
 import { container } from 'tsyringe';
 const router = Router();
 
