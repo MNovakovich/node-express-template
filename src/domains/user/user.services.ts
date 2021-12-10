@@ -2,7 +2,11 @@ import { User } from './user.model';
 import { Post } from '../posts/post.model';
 import { injectable } from 'tsyringe';
 import { UserAttributes } from './user.interface';
+import { serviceResponse } from '../../core/api-response';
 import { CreateUserDto } from './dto/create-user.dto';
+import { HttpException } from '../../common/excerptions/HttpExerption';
+import { StatusCodes } from 'http-status-codes';
+
 @injectable()
 export class UserService {
   private userRepository;
@@ -34,20 +38,19 @@ export class UserService {
   }
   public async create(data: CreateUserDto) {
     console.log(data, 'datqaaa');
-    // try {
+
     const user = await this.userRepository.findOne({
       where: { email: data.email },
     });
     if (user) {
-      return new Error(' greska je');
+      throw new HttpException(
+        StatusCodes.CONFLICT,
+        `You're email ${user.email} already exists ${StatusCodes.CONFLICT} `
+      );
     }
 
     const newUser = await this.userRepository.create(data);
-
-    //  if (foundUser === null) return;
-    // } catch (error: any) {
-    //   new Error('error');
-    // }
+    return newUser;
   }
 
   public async deleteOne(id: any): Promise<any> {
@@ -62,5 +65,9 @@ export class UserService {
     } catch (error: any) {
       console.log(error.message, 'greska');
     }
+  }
+  public async getById(id): Promise<any> {
+    const data = await this.userRepository.getOne(id);
+    return data;
   }
 }

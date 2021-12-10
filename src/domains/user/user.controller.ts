@@ -9,32 +9,50 @@ export class UserController {
   constructor(userService: UserService) {
     this.userService = userService;
     this.index = this.index.bind(this);
+    this.show = this.show.bind(this);
     this.create = this.create.bind(this);
     this.delete = this.delete.bind(this);
   }
 
   public async index(req: Request, res: Response): Promise<any> {
-    const data = await this.userService.getAll();
-    return res.status(200).send(data);
-  }
-
-  public async create(req: Request, res: Response, next: NextFunction) {
     try {
-      const data: any = { email: 'njihasssd@mail.ru', password: '11111' };
-      const result = await this.userService.create(data);
-      return res.status(200).send(result);
-    } catch (error: any) {
-      console.log(error.message, 'greska ');
+      const data = await this.userService.getAll();
+      return res.status(200).send(data);
+    } catch (error) {
       next(error);
     }
   }
 
-  public async delete(req: Request, res: Response) {
+  public async show(req: Request, res: Response): Promise<any> {
+    try {
+      const data = await this.userService.getById(Number(req.params.id));
+      return res.status(200).send(data);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  public async create(req: Request, res: Response, next: NextFunction) {
+    try {
+      const data = await this.userService.create(req.body);
+      // if (error) throw new Error(error);
+      return res.status(201).send(data);
+    } catch (error: any) {
+      console.log(error.name, 'greska ss');
+      next(error);
+    }
+  }
+
+  public async delete(req: Request, res: Response, next: NextFunction) {
     try {
       const data = await this.userService.deleteOne(Number(req.params.id));
       return res.status(200).send({ message: 'sucess' });
     } catch (error: any) {
       console.log(error.message);
+      next(error);
     }
   }
+}
+function next(error: unknown) {
+  throw new Error('Function not implemented.');
 }

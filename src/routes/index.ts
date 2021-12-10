@@ -1,6 +1,6 @@
 import { Router } from 'express';
 const postRouter = require('./posts');
-const userRouter = require('./users');
+const userRouter = require('./users.route');
 const tagRoute = require('./tags');
 const routes = Router();
 
