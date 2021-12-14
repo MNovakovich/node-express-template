@@ -9,4 +9,4 @@ router.get('/create', postController.create);
 router.get('/all', postController.index);
 router.get('/delete', postController.delete);
 
-module.exports = router;
+export default router;

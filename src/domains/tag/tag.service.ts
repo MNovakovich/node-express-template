@@ -39,11 +39,11 @@ export class TagService {
     console.log(' create user controlle');
     try {
       const newUser = await this.tagModel.create({
-        username: 'Johnny',
+        email: 'Johnny',
         password: 'John',
       });
       const foundUser = await this.tagModel.findOne({
-        where: { username: 'Johnny' },
+        where: { email: 'Johnny' },
       });
       if (foundUser === null) return;
     } catch (error: any) {

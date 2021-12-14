@@ -1,14 +1,11 @@
 import { Router } from 'express';
-import authRoute from './auth.route';
-const postRouter = require('./posts');
-const userRouter = require('./users.route');
+import userRouter from './users.route';
+import tagRouter from './tags';
+import postRouter from './posts';
+const router = Router();
 
-const tagRoute = require('./tags');
-const routes = Router();
+router.use('/users', userRouter);
+router.use('/tags', tagRouter);
+router.use('/posts', postRouter);
 
-routes.use('/auth', authRoute);
-routes.use('/posts', postRouter);
-routes.use('/users', userRouter);
-routes.use('/tags', tagRoute);
-
-export default routes;
+export default router;

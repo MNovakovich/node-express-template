@@ -13,4 +13,4 @@ router.get('/', userController.index);
 router.get('/:id', userController.show);
 router.delete('/:id', userController.delete);
 
-module.exports = router;
+export default router;
