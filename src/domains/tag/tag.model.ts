@@ -2,7 +2,7 @@ import { Model, DataTypes, Sequelize, Association } from 'sequelize';
 import { injectable, singleton } from 'tsyringe';
 import { Post } from '../posts/post.model';
 import { PostTag } from '../post_tag/post_tag.model';
-const sequelizeConnection = require('../../config/database');
+import db from '../../config/database';
 
 export class Tag extends Model {
   public id!: number; // Note that the `null assertion` `!` is required in strict mode.
@@ -26,7 +26,7 @@ Tag.init(
   {
     modelName: 'tag',
     tableName: 'tags',
-    sequelize: sequelizeConnection, // passing the `sequelize` instance is required
+    sequelize: db, // passing the `sequelize` instance is required
     underscored: true,
     timestamps: false,
   }
@@ -34,4 +34,4 @@ Tag.init(
 
 //Tag.associate = models => {
 // console.log(sequelizeConnection.models);
-Tag.belongsToMany(sequelizeConnection.models.post, { through: PostTag });
+Tag.belongsToMany(db.models.post, { through: PostTag });

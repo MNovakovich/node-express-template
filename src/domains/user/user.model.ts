@@ -4,7 +4,7 @@ import { Post } from '../posts/post.model';
 import { UserAttributes } from './user.interface';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-const db = require('../../config/database');
+import db from '../../config/database';
 
 export class User extends Model<UserAttributes, CreateUserDto> {
   id!: number;
@@ -75,16 +75,16 @@ async function doStuffWithUserModel() {
     password: 'John',
   });
 
-  const updated = await User.update(
-    {
-      email: 'Johnny@mail.ru',
-      password: 'John',
-      updatedAt: null,
-    },
-    { where: { id: 1 } }
-  );
+  // const updated = await User.update(
+  //   {
+  //     email: 'Johnny@mail.ru',
+  //     password: 'John',
+  //     updatedAt: null,
+  //   },
+  //   { where: { id: 1 } }
+  // );
 
-  const foundUser = await User.findOne({ where: { email: 'Johnny@mail.ru' } });
-  if (foundUser === null) return;
-  console.log(foundUser.email);
+  // const foundUser = await User.findOne({ where: { email: 'Johnny@mail.ru' } });
+  // if (foundUser === null) return;
+  // console.log(foundUser.email);
 }

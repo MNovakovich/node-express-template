@@ -14,4 +14,10 @@ router.post(
   authController.login
 );
 
+router.post(
+  '/registration',
+  validationMiddleware(CreateUserDto),
+  authController.registration
+);
+
 export default router;

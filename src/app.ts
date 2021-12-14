@@ -2,7 +2,7 @@ import 'dotenv';
 import 'reflect-metadata';
 import express, { Application } from 'express';
 const env = require('dotenv').config();
-const db = require('./config/database');
+import db from './config/database';
 import { DbRelations } from './config/relations';
 import routes from './routes';
 import { notFoundMiddleware } from './middleware/not-found.middleware';

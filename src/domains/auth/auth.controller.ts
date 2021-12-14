@@ -11,12 +11,25 @@ export class AuthController {
   constructor(authService: AuthService) {
     this.authService = authService;
   }
-  public async login(req: Request, res: Response, next: NextFunction) {
+  public login = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const res = await this.authService.login(req.body);
-      return res;
+      const data = await this.authService.login(req.body);
+      return res.status(200).send(data);
     } catch (error) {
       next(error);
     }
-  }
+  };
+
+  public registration = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const data = await this.authService.registration(req.body);
+      return data;
+    } catch (error) {
+      next(error);
+    }
+  };
 }

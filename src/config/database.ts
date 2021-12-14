@@ -12,4 +12,4 @@ const sequelizeConnection = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
   dialect: DB_DRIVER,
 });
 
-module.exports = sequelizeConnection;
+export default sequelizeConnection;

@@ -1,6 +1,6 @@
 import { Model, DataTypes, Sequelize } from 'sequelize';
 import { injectable, singleton } from 'tsyringe';
-const sequelizeConnection = require('../../config/database');
+import db from '../../config/database';
 import { User } from '../user/user.model';
 
 export class Post extends Model {
@@ -52,7 +52,7 @@ Post.init(
   {
     modelName: 'post',
     tableName: 'posts',
-    sequelize: sequelizeConnection,
+    sequelize: db,
     paranoid: true,
     deletedAt: 'deletedAt',
     underscored: true,
