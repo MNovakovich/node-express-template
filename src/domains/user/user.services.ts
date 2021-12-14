@@ -62,4 +62,10 @@ export class UserService {
     const data = await this.userRepository.findOne({ where: { id } });
     return data;
   }
+  public async getBy(key, value) {
+    const data = await this.userRepository.findOne({
+      where: { [key]: value },
+    });
+    return data;
+  }
 }
