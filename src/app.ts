@@ -1,6 +1,7 @@
 import 'dotenv';
 import 'reflect-metadata';
 import express, { Application } from 'express';
+import cors from 'cors';
 const env = require('dotenv').config();
 import db from './config/database';
 import { DbRelations } from './config/relations';
@@ -35,6 +36,7 @@ export class App {
   }
   private initializeMiddlewares() {
     // Body parsing Middleware
+    this.app.use(cors());
     this.app.use(express.urlencoded({ extended: false }));
     this.app.use(express.json());
     this.app.use('/', routes);
