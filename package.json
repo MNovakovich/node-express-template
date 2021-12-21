@@ -8,7 +8,7 @@
     "build": "tsc",
     "start": "node dist/src/server.js",
     "db:migrate": "ts-node node_modules/.bin/sequelize db:migrate",
-    "db:migrate:rollback": "ts-node node_modules/.bin/sequelize db:migrate:undo:all",
+    "db:migrate:drop": "ts-node node_modules/.bin/sequelize db:migrate:undo:all",
     "db:seed": "ts-node node_modules/.bin/sequelize db:seed:all",
     "seed": "npx sequelize-cli db:seed:all --seeders-path ./src/database/seeders"
   },
