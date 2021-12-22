@@ -2,7 +2,7 @@ import { Router } from 'express';
 import authRouter from './auth.route';
 import userRouter from './users.route';
 import tagRouter from './tags';
-import postRouter from './posts';
+import postRouter from './posts.route';
 const router = Router();
 
 router.use('/auth', authRouter);

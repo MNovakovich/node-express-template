@@ -4,9 +4,10 @@ import { container } from 'tsyringe';
 const router = Router();
 
 const postController = container.resolve(PostController);
-
-router.get('/create', postController.create);
-router.get('/all', postController.index);
-router.get('/delete', postController.delete);
+router.get('/', postController.index);
+router.get('/:id', postController.show);
+router.post('/', postController.create);
+router.patch('/:id', postController.update);
+router.delete('/:id', postController.delete);
 
 export default router;
