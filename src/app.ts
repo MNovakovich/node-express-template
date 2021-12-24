@@ -8,6 +8,7 @@ import { DbRelations } from './config/relations';
 import routes from './routes';
 import { notFoundMiddleware } from './middleware/not-found.middleware';
 import { errorHandlerMiddleware } from './middleware/errror.middleware';
+import { paginateFilterUrl } from './core/paginationAndFilteringDecorator';
 import autoRun from './sequelize-auto';
 //autoRun();
 export class App {
@@ -28,6 +29,7 @@ export class App {
         console.log('db connection');
         await db.sync({ force: false });
         DbRelations(db.models);
+        paginateFilterUrl.setModels(db.models);
       } catch (error: any) {
         console.log(error.message, '-error server.ts');
       }

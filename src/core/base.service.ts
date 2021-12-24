@@ -1,6 +1,8 @@
 import { IBaseService, IRepository } from './base.interfaces';
 import { HttpException } from '../common/excerptions/HttpExerption';
 import { StatusCodes } from 'http-status-codes';
+import { paginateFilterUrl } from './paginationAndFilteringDecorator';
+
 export class BaseService<T> implements IBaseService {
   public repository: T | any;
 
@@ -8,9 +10,9 @@ export class BaseService<T> implements IBaseService {
     this.repository = repository;
   }
 
-  findAll = async () => {
+  findAll = async (query) => {
     try {
-      const res = await this.repository.findAll({});
+      const res = await paginateFilterUrl.query(this.repository, query, {});
       return res;
     } catch (error) {
       console.log(error);

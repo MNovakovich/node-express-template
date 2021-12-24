@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 
 export abstract class IBaseService {
-  abstract findAll(): any;
+  abstract findAll(query: any): any;
   abstract findOne(id: number);
   abstract create(data: any): any;
   abstract update(id: number, data: any): any;

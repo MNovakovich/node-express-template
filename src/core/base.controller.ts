@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { injectable } from 'tsyringe';
 import { IBaseController } from './base.interfaces';
+
 @injectable()
 export class BaseController implements IBaseController {
   service: any;
@@ -10,7 +11,7 @@ export class BaseController implements IBaseController {
 
   public index = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const data = await this.service.findAll();
+      const data = await this.service.findAll(req.query);
       return res.status(200).send(data);
     } catch (error: any) {
       console.log(error.message);
